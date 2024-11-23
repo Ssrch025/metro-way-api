@@ -12,7 +12,13 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 	db := database.Connect(cfg.DatabaseURL)
-	err := db.AutoMigrate(&domain.Booking{})
+	err := db.AutoMigrate(
+		&domain.Booking{},
+		&domain.Station{},
+		&domain.Ticket{},
+		&domain.Train{},
+		&domain.TrainSchedule{},
+	)
 	if err != nil {
 		log.Fatal(err)
 		fmt.Println("Failed to migrate to database")
